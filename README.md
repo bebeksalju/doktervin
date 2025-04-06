@@ -30,8 +30,8 @@ Chatbot AI berbasis web yang dibuat menggunakan Python Flask dan integrasi denga
 ### 1. Clone Repository
 
 ```bash
-git clone https://github.com/username/nama-repo.git
-cd nama-repo
+git clone https://github.com/bebeksalju/doktervin.git
+cd doktervin
 ```
 
 ### 2. Buat Virtual Environment
