@@ -1,0 +1,64 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Chatbot</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <div class="chat-container">
+        <header class="chat-header">
+            <h2>Dokter Vin</h2>
+        </header>
+        <div class="chat-messages" id="chatMessages">
+            <div class="typing-indicator" id="typingIndicator" style="display:none;">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="chat-input">
+            <textarea id="userMessage" placeholder="Type your message..."></textarea>
+            <button id="sendMessage">Send</button>
+        </div>
+    </div>
+
+    <script>
+        // Di dalam script, tambahkan:
+        $("#userMessage").keypress(function (e) {
+            if (e.which === 13 && !e.shiftKey) {
+                e.preventDefault();
+                $("#sendMessage").click();
+            }
+        });
+
+        // Tambahkan sebelum ajax:
+        $("#typingIndicator").show();
+        $("#chatMessages").scrollTop($("#chatMessages")[0].scrollHeight);
+
+        // Dalam success ajax:
+        $("#typingIndicator").hide();
+
+        $("#sendMessage").click(function () {
+            const message = $("#userMessage").val();
+            if (message.trim() === "") return;
+
+            // Tampilkan pesan pengguna di chat
+            $("#chatMessages").append(`<div class="message user-message">${message}</div>`);
+
+            // Kirim ke server
+            $.ajax({
+                url: "/chat",
+                type: "POST",
+                contentType: "application/json",
+                data: JSON.stringify({ message: message }),
+                success: function (data) {
+                    $("#chatMessages").append(`<div class="message bot-message">${data.response}</div>`);
+                    $("#chatMessages").scrollTop($("#chatMessages")[0].scrollHeight); // Scroll otomatis ke bawah
+                },
+            });
+
+            $("#userMessage").val(""); // Hapus input pengguna
+        });
+    </script>
+</body>
+</html>
