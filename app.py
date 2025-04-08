@@ -1,7 +1,7 @@
 import google.generativeai as genai
 from flask import Flask, render_template, request, jsonify, session
 
-genai.configure(api_key="AIzaSyCtwQRlY1dBqKa-DNQ4vAPni4QqDlbp1d4")
+genai.configure(api_key="####################")
 
 # Inisialisasi Flask
 app = Flask(__name__)
